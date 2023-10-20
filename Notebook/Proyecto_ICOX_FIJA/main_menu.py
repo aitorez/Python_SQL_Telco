@@ -1,27 +1,34 @@
 import pandas as pd
 import sqlite3
 from conection_sql_lite import*
+import subprocess
 
-% run cdr_simulator.py 
+from cdr_simulator import df_cdrs
+
+
 # Ejemplo de DataFrame ------------------------------------------------------------------
 
-datos = {'nombre': ['Alice', 'Bob', 'Charlie'],
-         'edad': [30, 35, 25]}
-df = pd.DataFrame(datos)
+#df_cdrs1
+
 
 
 # Función principal para el menú de opciones -----------------------------------------------
 
+# Función principal para el menú de opciones
 def menu():
     conn = conectar_base_de_datos()
     
     while True:
-        print("\nOpciones:")
+        print("\n##################################################")
+        print("\nOpciones:\n")
         print("1. Crear una tabla nueva desde un DataFrame")
         print("2. Borrar una tabla")
-        print("3. Salir\n")
+        print("3. Listar tablas en la base de datos")
+        print("4. Mostrar información de una tabla")
+        print("5. Salir\n")
+        print("##################################################")
         
-        opcion = input("Elige una opción (1-3): ")
+        opcion = input("Elige una opción (1-5): ")
         
         if opcion == '1':
             # Cargar un DataFrame existente
@@ -36,15 +43,23 @@ def menu():
             except KeyError:
                 print(f"No se encontró un DataFrame con el nombre '{nombre_df}'.")
                 
-        elif opcion == '2':borrar_tabla(conn)
+        elif opcion == '2':
+            print("\nRESPUESTA:\n")
+            borrar_tabla(conn)
             
         elif opcion == '3':
-        
+            print("\nRESPUESTA:\n")
+            listar_tablas(conn)
+            
+        elif opcion == '4':
+            print("\nRESPUESTA:\n")
+            mostrar_informacion_tabla(conn)
+            
+        elif opcion == '5':
             conn.close()
             break
         else:
             print("Opción no válida. Inténtalo de nuevo.")
-
 
 # EJECUCION -----------------------------------------------------------------------------------
 menu()

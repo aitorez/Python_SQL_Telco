@@ -4,9 +4,17 @@ from datetime import datetime, timedelta
 
 # Genera un número de teléfono MOC con prefijo español y 9 dígitos adicionales
 def generar_numero_moc():
+    
     prefijo_espanol = "+34"  # Prefijo español
-    nueve_digitos = "".join([str(random.randint(0, 9)) for _ in range(9)])
-    return f"{prefijo_espanol}{nueve_digitos}"
+    
+    probabilidad_numeros_especiales = 0.25  # 25% de probabilidad de número especial
+    if random.random() < probabilidad_numeros_especiales:
+        numeros_especiales = ["1002","1003","1004","100", "123", "911", "0800", "555", "666", "777", "888", "999", "112", "113", "114", "115", "116", "117", "118", "119", "900", "901", "902", "903", "904", "905", "906", "907", "908", "909"]
+        return random.choice(numeros_especiales)
+    else:
+        nueve_digitos = "".join([str(random.randint(0, 9)) for _ in range(9)])
+        return f"{prefijo_espanol}{nueve_digitos}"
+
 
 # Genera un número de teléfono aleatorio para MTC
 def generar_numero_mtc():
@@ -56,5 +64,9 @@ def generar_dataframe_cdrs(cantidad):
     return pd.DataFrame(cdrs)
 
 # Ejemplo de generación de un DataFrame de CDRs
-cantidad_registros = 1000
+cantidad_registros = 5000
 df_cdrs = generar_dataframe_cdrs(cantidad_registros)
+df_cdrs['Minutos'] = (df_cdrs['Duracion']/60).round(2)
+# Limpiar el signo "+" de las columnas "Telefono1" y "Telefono2"
+df_cdrs["Origen_corregido"] = df_cdrs["Origen"].str.replace("+", "")
+df_cdrs["Destino_corregido"] = df_cdrs["Destino"].str.replace("+", "")
