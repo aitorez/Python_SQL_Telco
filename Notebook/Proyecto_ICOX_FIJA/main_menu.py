@@ -3,7 +3,7 @@ import sqlite3
 from conection_sql_lite import*
 import subprocess
 
-from cdr_simulator import df_cdrs
+from cdr_national_simulator import df_cdrs
 
 
 # Ejemplo de DataFrame ------------------------------------------------------------------
