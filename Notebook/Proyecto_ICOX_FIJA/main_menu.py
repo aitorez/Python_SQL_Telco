@@ -2,6 +2,7 @@ import pandas as pd
 import sqlite3
 from conection_sql_lite import*
 
+% run cdr_simulator.py 
 # Ejemplo de DataFrame ------------------------------------------------------------------
 
 datos = {'nombre': ['Alice', 'Bob', 'Charlie'],
