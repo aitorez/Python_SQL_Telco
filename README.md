@@ -6,9 +6,22 @@ En este proyecto se pretende crear un tarificador respetando ciertas lógicas te
 
 Para ello la estructura del proyecto es:
 
-- 
+- Para construir servidor SQLlite:
 
+	. **conection_sql_lite.py:** Se crean las funciones que se llamaran en main_menu para poder interactuar con el servidor.
+	. **main_menu.py:** Se crea el interfaz y se llama a las funciones para poder interactuar y hacer las siguientes funcionalidades:
+				
+			. Crear un servidor
+			. Crear una tabla en el servidor indicado a través de un dataframe (pandas)
+			. Borrar, actualizar o remplazar una determinada tabla
+			. Consultar las tablas existentes en un determinado servidor
+			. Salir del servidor
 
+	. **cdr_national_simulator:** Se crean unas CDRS de tipología nacional incluyendo eventos de red inteligente.Respetando lógicas MOC/MTC
+
+	. **cdr_international_simulator:** Se crean unas CDRS de tipología internacional. Respetando lógicas MOC/MTC
+	
+	. **functions.py:** Se crean funciones útiles para agilizar la manipulación de los datos.
 
 
 
