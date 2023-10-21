@@ -2,9 +2,17 @@ import random
 import pandas as pd
 from datetime import datetime, timedelta
 from functions import*
+import string
 
-pais = pd.read_csv(r'/Users/aitorelordizamora/Documents/GitHub/telco/Notebook/Proyecto_ICOX_FIJA/reference paises iso/paises.csv', sep=',')
+pais = pd.read_csv(r'/Users/aitorelordizamora/Documents/GitHub/telco/Notebook/Proyecto_telco/reference paises iso/paises.csv', sep=',')
 pais = pais[pais['phone_code'].notnull()]
+pais = pais.drop_duplicates(subset = 'phone_code', keep='first')
+
+
+def generar_cadena_aleatoria(longitud=12):
+    caracteres = string.ascii_letters + string.digits  # Letras y dígitos
+    cadena_aleatoria = ''.join(random.choice(caracteres) for _ in range(longitud))
+    return cadena_aleatoria
 
 # Genera un número de teléfono MOC con prefijo español y 9 dígitos adicionales
 def generar_numero_moc_origen():
@@ -53,15 +61,17 @@ def crear_registro_cdr():
         origen = generar_numero_moc_origen()
         destino = generar_numero_moc_destino()
         tipo = "MOC"  # Llamada emitida
+        unique_id = generar_cadena_aleatoria()
     else:
         origen = generar_numero_moc_destino()
         destino = generar_numero_moc_origen()
         tipo = "MTC"  # Llamada recibida
+        unique_id = generar_cadena_aleatoria()
     
     duracion = generar_duracion_llamada()
     fecha_hora = generar_fecha_hora()
     
-    return {"Origen": origen, "Destino": destino, "Duracion": duracion, "Fecha_Hora": fecha_hora, "Sentido": tipo}
+    return {"Origen": origen, "Destino": destino, "Duracion": duracion, "Fecha_Hora": fecha_hora, "Sentido": tipo, "ID unico": unique_id}
 
 # Genera un DataFrame con registros simulados de CDR
 def generar_dataframe_cdrs(cantidad):
@@ -92,4 +102,3 @@ df_cdrs_i['Tipo evento'] = 'Internacional'
 
 df_cdrs_i['Max_coincidencia'] = df_cdrs_i['Destino_corregido'].apply(lambda x: encontrar_maxima_coincidencia(x, pais['phone_code']))
 df_cdrs_i = df_cdrs_i.merge(pais, how='left', left_on='Max_coincidencia', right_on = 'phone_code')
-print(df_cdrs_i.columns)
