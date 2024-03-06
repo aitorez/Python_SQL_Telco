@@ -34,3 +34,8 @@ Esta categorización recoge la información en varios diccionarios de las variab
 **Alarmas consumo:** En este proceso se crea la configuración al servidor SMTP, incorpora las credencias del email a través de un fichero yaml y se aplican una seríe de lógicas para que configure el campo "FROM" y "SUBJECT" en función del operador. Además, hay un control mediante los except de los errores que puedan ocurrir durante el envio. En este punto se guarda en una lista todos los operadores que han sufrido un error en los envios de tal forma que cuando se termine de enviar todos los correos se pueda analizar y reenviar los operadores con error.
 
 **Movimientos de portabilidad:** Este proceso permite recopilar de un directorio todos los ficheros que suministra el nodo central de portabilidad y generar una histórico. Con la diferencia de que este proceso categoriza en función del nrn origen y destino el proveedor del que viene o va. Además, de alguna lógica más profunda con rangos de numeración en caso de que sean el primer movimiento de un msisdn.
+
+## Proyecto QlickView
+
+En este proyecto se pretende crear una ETL con las CDRs recibidas de un proveedor. Para ello se van a generar unas CDRs aleatorias con un formato estandar a partir de un jupyter notebook. Una vez se han generado estos ficheros se va a construir la ETL desde Qlickview. Con el fin de generar unos visulizadores que permitan explotar el dato. Al ser unas CDRs ficticias los consumos no siguen una lógica de consumición del sector telco.
+
